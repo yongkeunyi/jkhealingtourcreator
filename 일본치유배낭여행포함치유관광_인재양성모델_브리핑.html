@@ -1,0 +1,803 @@
+<title>치유관광 인재양성 모델 브리핑</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: 전체 지도(한 장의 그림) ↔ 분야별 상세 화면. 분야마다 고유색 하나, 색면 타일은 두 테마 공통 */
+:root{
+  --bg:#F3F5F8; --surface:#FFFFFF; --fg:#152030; --muted:#566275; --line:#D8DEE7; --board:#E9EEF5;
+  /* 분야 색 (fill) + 그 위 글자색 (ink) + 바탕 위 글자용 (t) */
+  --c0:#3E4C5E; --c0-ink:#FFFFFF; --c0-t:#3E4C5E;   /* 모집 */
+  --c1:#087F5B; --c1-ink:#FFFFFF; --c1-t:#087F5B;   /* 콘텐츠 이해 */
+  --c2:#2A55D4; --c2-ink:#FFFFFF; --c2-t:#2A55D4;   /* 쇼핑몰 창업 */
+  --c3:#F28C28; --c3-ink:#2A1600; --c3-t:#B35A00;   /* 현장체험 */
+  --c4:#C2256E; --c4-ink:#FFFFFF; --c4-t:#C2256E;   /* 마케팅 */
+  --cg:#FFC21A; --cg-ink:#2A1F00; --cg-t:#8A6200;   /* 목표 */
+  --ci:#6A43D1; --ci-ink:#FFFFFF; --ci-t:#6A43D1;   /* 과정 소개 */
+  --cs:#0B7C96; --cs-ink:#FFFFFF; --cs-t:#0B7C96;   /* 일정 */
+  --ce:#C93A2B; --ce-ink:#FFFFFF; --ce-t:#C93A2B;   /* 평가 */
+  --cp:#1F3A8A; --cp-ink:#FFFFFF; --cp-t:#1F3A8A;   /* 가치·비전 */
+  --f-display:"Noto Serif KR","Nanum Myeongjo",serif;
+  --f-body:"IBM Plex Sans KR","Apple SD Gothic Neo","Malgun Gothic",sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0F141C; --surface:#171E29; --fg:#E8EDF4; --muted:#9BA7B8; --line:#2B3545; --board:#131A24;
+  --c0-t:#AEB9C8; --c1-t:#4FD1A5; --c2-t:#8EA8FF; --c3-t:#FFB062; --c4-t:#FF7FB6; --cg-t:#FFD45C; --ci-t:#B39CFF; --cs-t:#5FD0EA; --ce-t:#FF8F80; --cp-t:#A5B8FF;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0F141C; --surface:#171E29; --fg:#E8EDF4; --muted:#9BA7B8; --line:#2B3545; --board:#131A24;
+  --c0-t:#AEB9C8; --c1-t:#4FD1A5; --c2-t:#8EA8FF; --c3-t:#FFB062; --c4-t:#FF7FB6; --cg-t:#FFD45C; --ci-t:#B39CFF; --cs-t:#5FD0EA; --ce-t:#FF8F80; --cp-t:#A5B8FF;
+  color-scheme:dark}
+.v0{--vc:var(--c0);--vi:var(--c0-ink);--vt:var(--c0-t)}
+.v1{--vc:var(--c1);--vi:var(--c1-ink);--vt:var(--c1-t)}
+.v2{--vc:var(--c2);--vi:var(--c2-ink);--vt:var(--c2-t)}
+.v3{--vc:var(--c3);--vi:var(--c3-ink);--vt:var(--c3-t)}
+.v4{--vc:var(--c4);--vi:var(--c4-ink);--vt:var(--c4-t)}
+.vg{--vc:var(--cg);--vi:var(--cg-ink);--vt:var(--cg-t)}
+.vi{--vc:var(--ci);--vi:var(--ci-ink);--vt:var(--ci-t)}
+.vs{--vc:var(--cs);--vi:var(--cs-ink);--vt:var(--cs-t)}
+.ve{--vc:var(--ce);--vi:var(--ce-ink);--vt:var(--ce-t)}
+.vp{--vc:var(--cp);--vi:var(--cp-ink);--vt:var(--cp-t)}
+
+[hidden]{display:none!important}
+body{background:var(--bg);color:var(--fg);font-family:var(--f-body);font-size:16px;line-height:1.7}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:20px;padding-block:28px 72px;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.3}
+h2{font-size:22px;font-weight:800;color:var(--vt,var(--fg))}
+h3{font-size:17px;font-weight:600}
+p{margin:0;max-width:70ch}
+section{display:flex;flex-direction:column;gap:16px;scroll-margin-top:120px}
+ul,ol{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--cs-t);outline-offset:2px}
+.mono,td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+
+/* ===== top nav ===== */
+.topnav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--surface);border-bottom:1px solid var(--line)}
+.nav-in{max-width:1080px;margin:0 auto;padding-inline:20px;display:flex;align-items:center;gap:12px;min-height:56px}
+.brand{font-family:var(--f-display);font-weight:800;font-size:15px;white-space:nowrap;background:none;border:0;padding:0;cursor:pointer}
+.home{background:var(--fg);color:var(--bg);border:0;padding:8px 14px;font-weight:700;font-size:14px;cursor:pointer;border-radius:4px;white-space:nowrap}
+.menu{list-style:none;margin:0 0 0 auto;padding:0;display:flex;flex-direction:row;gap:2px}
+.menu>li{position:relative}
+.menu>li>button{background:none;border:0;border-bottom:3px solid transparent;padding:16px 11px 13px;cursor:pointer;font-size:14.5px;font-weight:600;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.menu>li>button::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--vc)}
+.menu>li.active>button{border-bottom-color:var(--vc);color:var(--vt)}
+.sub{list-style:none;margin:0;padding:6px;position:absolute;top:100%;left:0;min-width:230px;background:var(--surface);border:1px solid var(--line);box-shadow:0 12px 30px color-mix(in srgb,var(--fg) 16%,transparent);display:none;flex-direction:column;gap:0}
+.menu>li:nth-last-child(-n+2) .sub{left:auto;right:0}
+.menu>li:hover .sub,.menu>li:focus-within .sub,.menu>li.open .sub{display:flex}
+.sub button{display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:0;padding:8px 12px;cursor:pointer;font-size:14px}
+.sub button:hover{background:color-mix(in srgb,var(--vc) 12%,var(--surface))}
+.sub .dot{width:8px;height:8px;border-radius:50%;background:var(--vc);flex:none}
+.sub .i{padding-left:28px;font-size:13px;color:var(--muted)}
+.nav-toggle{display:none;margin-left:auto;background:none;border:1px solid var(--line);padding:8px 14px;cursor:pointer;font-weight:600;font-size:14px}
+@media (max-width:900px){
+  .nav-toggle{display:block}
+  .nav-in{flex-wrap:wrap}
+  .menu{display:none;flex-direction:column;width:100%;margin:0;padding-bottom:12px;max-height:70vh;overflow-y:auto}
+  .topnav.nav-open .menu{display:flex}
+  .menu>li>button{padding:10px 0;width:100%;border-bottom:0}
+  .sub{display:flex;position:static;box-shadow:none;border:0;border-left:3px solid var(--vc);padding:0 0 6px 8px;min-width:0}
+}
+
+/* ===== breadcrumb (상세 화면) ===== */
+.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:10px 14px}
+.back{background:var(--fg);color:var(--bg);border:0;padding:9px 16px;font-weight:700;cursor:pointer;border-radius:4px;font-size:14px}
+.crumb .trail{font-size:14px;color:var(--muted)}
+.crumb .trail b{color:var(--vt)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-left:auto}
+.chip{border:0;padding:5px 11px;border-radius:999px;font-size:12.5px;font-weight:700;cursor:pointer;background:color-mix(in srgb,var(--vc) 14%,var(--surface));color:var(--vt)}
+.chip[aria-current="true"]{background:var(--vc);color:var(--vi)}
+
+/* ===== 전체 지도 ===== */
+.board{background:var(--board);border:1px solid var(--line);padding:24px;display:flex;flex-direction:column;gap:22px}
+.hero{background:#152030;color:#F3F6FA;padding:26px 28px;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:24px;align-items:end}
+.hero .eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.08em;color:#FFC21A}
+.hero h1{font-size:clamp(24px,3.6vw,36px);font-weight:800;margin-top:6px}
+.hero p{color:#C7D1DE;margin-top:8px;font-size:15px}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.kpi{border:1px solid #33435A;padding:10px 12px}
+.kpi b{display:block;font-family:var(--f-mono);font-size:20px;color:#FFFFFF}
+.kpi span{font-size:12px;color:#AFC0D4}
+@media (max-width:760px){.hero{grid-template-columns:1fr}}
+
+.board-label{font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--muted)}
+.path{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+@media (max-width:900px){.path{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.path{grid-template-columns:1fr}}
+.stop{position:relative;background:var(--vc);color:var(--vi);border:0;text-align:left;padding:16px 16px 14px;cursor:pointer;display:flex;flex-direction:column;gap:6px;min-width:0;border-radius:6px;transition:transform .15s ease, box-shadow .15s ease}
+.stop:hover{transform:translateY(-3px);box-shadow:0 10px 22px color-mix(in srgb,var(--vc) 40%,transparent)}
+.stop .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.stop .step{font-family:var(--f-mono);font-size:12px;font-weight:600;background:color-mix(in srgb,var(--vi) 18%,transparent);padding:2px 8px;border-radius:999px}
+.stop .hrs{font-family:var(--f-mono);font-size:13px;font-weight:600}
+.stop .name{font-family:var(--f-display);font-weight:800;font-size:19px;line-height:1.3}
+.stop .when{font-family:var(--f-mono);font-size:13px;opacity:.9}
+.stop ul{font-size:13.5px;line-height:1.5;gap:2px;padding-left:1.1em}
+.stop .out{font-size:12.5px;border-top:1px solid color-mix(in srgb,var(--vi) 35%,transparent);padding-top:6px;margin-top:auto}
+.stop .go{font-size:12px;font-weight:700;opacity:.85}
+.stop::after{content:"";position:absolute;right:-15px;top:50%;width:12px;height:12px;border-top:3px solid var(--muted);border-right:3px solid var(--muted);transform:translateY(-50%) rotate(45deg);opacity:.55}
+.stop.end::after,.stop.goal::after{display:none}
+@media (max-width:900px){.stop::after{display:none}}
+.stop.goal{grid-column:span 2;justify-content:center}
+.stop.goal .name{font-size:24px}
+@media (max-width:520px){.stop.goal{grid-column:auto}}
+
+.hours{display:flex;flex-direction:column;gap:8px}
+.bar{display:flex;height:46px;border-radius:6px;overflow:hidden}
+.bar button{border:0;cursor:pointer;background:var(--vc);color:var(--vi);font-size:12.5px;font-weight:700;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1.25;min-width:0;padding:0 4px}
+.bar button span{font-family:var(--f-mono);font-size:12px;font-weight:600}
+.bar button:hover{filter:brightness(1.08)}
+.scale{display:flex;justify-content:space-between;font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+
+.quick{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px}
+@media (max-width:900px){.quick{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:520px){.quick{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.q{background:var(--surface);border:2px solid var(--vc);color:var(--fg);padding:12px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:4px;border-radius:6px;min-width:0}
+.q:hover{background:color-mix(in srgb,var(--vc) 12%,var(--surface))}
+.q b{color:var(--vt);font-size:14.5px}
+.q span{font-size:12.5px;color:var(--muted);line-height:1.45}
+
+/* ===== 상세 화면 공통 ===== */
+.vhead{background:var(--vc);color:var(--vi);padding:22px 24px;display:flex;flex-direction:column;gap:8px;border-radius:6px}
+.vhead .k{font-family:var(--f-mono);font-size:12.5px;font-weight:600;letter-spacing:.06em;opacity:.9}
+.vhead h2{color:var(--vi);font-size:26px}
+.vhead p{opacity:.95}
+.vhead .facts{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.vhead .facts span{background:color-mix(in srgb,var(--vi) 16%,transparent);padding:3px 10px;border-radius:999px;font-size:13px;font-weight:600}
+.tbl{overflow-x:auto;border:1px solid var(--line);background:var(--surface);border-radius:6px}
+table{border-collapse:collapse;width:100%;font-size:14.5px;min-width:640px}
+th,td{text-align:left;vertical-align:top;padding:10px 12px;border-bottom:1px solid var(--line)}
+thead th{font-size:12.5px;letter-spacing:.04em;background:color-mix(in srgb,var(--vc,var(--fg)) 14%,var(--surface));color:var(--vt,var(--fg))}
+tbody th{font-size:13px;color:var(--vt,var(--muted));background:color-mix(in srgb,var(--vc,var(--fg)) 7%,var(--surface));width:150px}
+tr:last-child td,tr:last-child th{border-bottom:0}
+tr.hl td{background:color-mix(in srgb,var(--vc) 10%,var(--surface))}
+.key{display:inline-block;background:var(--vc);color:var(--vi);font-size:12px;font-weight:700;padding:1px 8px;border-radius:3px}
+
+.courses{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+@media (max-width:860px){.courses{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:480px){.courses{grid-template-columns:1fr}}
+.course{background:var(--surface);border:2px solid var(--vc);padding:16px;display:flex;flex-direction:column;gap:6px;min-width:0;border-radius:6px;text-align:left;cursor:pointer}
+.course:hover{background:color-mix(in srgb,var(--vc) 10%,var(--surface))}
+.course .k{font-family:var(--f-mono);font-size:12px;color:var(--vt);font-weight:600}
+.course h3{color:var(--vt)}
+.course .h{font-family:var(--f-mono);font-size:22px}
+.course p{font-size:14px;color:var(--muted)}
+.roles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:640px){.roles{grid-template-columns:1fr}}
+.role{background:color-mix(in srgb,var(--vc) 10%,var(--surface));padding:20px;display:flex;flex-direction:column;gap:8px;border-radius:6px;min-width:0}
+.role .k{font-size:12px;font-weight:700;color:var(--vt);letter-spacing:.05em}
+.income{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:640px){.income{grid-template-columns:1fr}}
+.income div{background:var(--vc);color:var(--vi);padding:14px;border-radius:6px;font-weight:600;font-size:14.5px}
+.income b{font-family:var(--f-mono);display:block;font-size:12px;opacity:.85}
+
+/* 달력 */
+.legend{display:flex;flex-wrap:wrap;gap:14px;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.sw{width:14px;height:14px;background:var(--vc);display:inline-block;border-radius:3px}
+.cal-wrap{overflow-x:auto}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(70px,1fr));gap:5px;min-width:520px}
+.cal .dow{font-size:12px;font-weight:700;color:var(--muted);text-align:center}
+.cal .d{min-height:78px;background:var(--surface);border:1px solid var(--line);padding:6px 8px;display:flex;flex-direction:column;gap:2px;font-size:12px;line-height:1.35;border-radius:4px}
+.cal .d b{font-family:var(--f-mono);font-size:13px}
+.cal .d.on{background:var(--vc);color:var(--vi);border-color:var(--vc);cursor:pointer}
+.cal .d .t{font-family:var(--f-mono);font-size:11px;opacity:.85}
+.cal .d.dim{color:var(--muted)}
+.sum{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.sum div{background:var(--surface);border:1px solid var(--line);padding:12px 14px;border-radius:6px}
+.sum strong{font-family:var(--f-mono);font-size:24px;display:block;color:var(--vt)}
+.sum span{font-size:13px;color:var(--muted)}
+@media (max-width:560px){.sum{grid-template-columns:1fr}}
+
+/* 로드맵 */
+.road{list-style:none;padding:0;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0}
+.road li{position:relative;padding:34px 10px 0 0;font-size:13.5px;line-height:1.5;min-width:0}
+.road li .n{position:absolute;top:0;left:0;width:26px;height:26px;border-radius:50%;background:var(--vc);color:var(--vi);font-family:var(--f-mono);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center}
+.road li::after{content:"";position:absolute;top:12px;left:30px;right:4px;height:3px;background:color-mix(in srgb,var(--vc) 30%,var(--surface))}
+.road li:last-child::after{display:none}
+.road .dt{font-family:var(--f-mono);font-size:12px;color:var(--vt);display:block;font-weight:600}
+@media (max-width:760px){.road{grid-template-columns:1fr;gap:14px}.road li{padding:2px 0 0 40px}.road li::after{display:none}}
+
+.note{border-left:4px solid var(--cg);padding:12px 16px;background:var(--surface);font-size:14.5px;border-radius:0 6px 6px 0}
+footer{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:16px}
+
+/* briefing additions */
+.roles.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:860px){.roles.three{grid-template-columns:1fr}}
+.role ul,.role ol{font-size:15px}
+.income.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:760px){.income.four{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.split{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:14px;align-items:start}
+@media (max-width:760px){.split{grid-template-columns:1fr}}
+.split table{min-width:0}
+.days{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.days{grid-template-columns:1fr}}
+.day{background:var(--surface);border:2px solid var(--vc);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.day.solid{background:var(--vc);color:var(--vi)}
+.day .k{font-family:var(--f-mono);font-size:12.5px;font-weight:600;color:var(--vt)}
+.day.solid .k,.day.solid h3{color:var(--vi)}
+.day h3{color:var(--vt)}
+.day p{font-size:14.5px;line-height:1.6}
+.day .stay{margin-top:auto;font-size:12.5px;font-weight:700;color:var(--vt)}
+.day.solid .stay{color:var(--vi)}
+.gantt-wrap{overflow-x:auto}
+.gantt{min-width:720px;display:flex;flex-direction:column;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px}
+.g-head,.g-row{display:grid;grid-template-columns:130px 1fr;gap:12px;align-items:center}
+.g-months{position:relative;height:22px;border-bottom:1px solid var(--line)}
+.g-months span{position:absolute;top:0;font-size:12.5px;font-weight:700;color:var(--muted)}
+.g-label{font-size:13.5px;font-weight:700;color:var(--vt)}
+.g-track{position:relative;height:38px;background:repeating-linear-gradient(90deg,transparent 0 calc(29.4% - 1px),var(--line) calc(29.4% - 1px) 29.4%)}
+.g-bar{position:absolute;top:4px;height:30px;border:0;border-radius:4px;background:var(--vc);color:var(--vi);font-size:12.5px;font-weight:700;text-align:left;padding:0 10px;cursor:pointer;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.g-dot{position:absolute;top:4px;width:12px;height:30px;border:0;border-radius:3px;background:var(--vc);cursor:pointer;transform:translateX(-50%)}
+.g-note{position:absolute;top:9px;font-size:12.5px;color:var(--vt);font-weight:600;white-space:nowrap}
+.g-diamond{position:absolute;top:10px;width:16px;height:16px;background:var(--cg);transform:translateX(-50%) rotate(45deg)}
+.flow{display:grid;grid-template-columns:minmax(0,1fr) 36px minmax(0,1fr);gap:12px;align-items:center}
+.fbox{border:0;border-radius:6px;padding:16px 18px;background:var(--vc);color:var(--vi);text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:4px;min-width:0}
+.fbox span{font-family:var(--f-mono);font-size:12.5px;opacity:.9}
+.fbox b{font-size:16px}
+.farrow{font-size:24px;font-weight:700;color:var(--muted);text-align:center}
+@media (max-width:640px){.flow{grid-template-columns:1fr}.farrow{transform:rotate(90deg)}}
+.hub{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.hub-center{grid-row:span 2;background:#152030;color:#F3F6FA;border-radius:6px;padding:20px;display:flex;flex-direction:column;gap:8px;justify-content:center}
+.hub-center .k{font-size:12px;font-weight:700;color:#FFC21A;letter-spacing:.05em}
+.hub-center h3{color:#FFFFFF;font-size:22px}
+.hub-center p{color:#C7D1DE;font-size:14.5px}
+@media (max-width:760px){.hub{grid-template-columns:1fr}.hub-center{grid-row:auto}}
+.path.steps4 .stop{cursor:default}
+.path.steps4 .stop:hover{transform:none;box-shadow:none}
+section[data-view="vision"] .hero{border-radius:6px}
+.quick.eight{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:640px){.quick.eight{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.valueband{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;border-radius:6px;overflow:hidden;border:0;padding:0;cursor:pointer;background:var(--cp);text-align:left}
+.valueband span{padding:14px 16px;color:#FFFFFF;font-size:14px;line-height:1.5;border-left:1px solid rgba(255,255,255,.18)}
+.valueband span:first-child{border-left:0;background:rgba(0,0,0,.18);font-weight:700}
+.valueband b{display:block;font-size:17px;color:#FFD45C}
+@media (max-width:760px){.valueband{grid-template-columns:1fr 1fr}}
+.pillars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+@media (max-width:860px){.pillars{grid-template-columns:1fr}}
+.pillar{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:18px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.pillar .n{font-family:var(--f-mono);font-size:13px;font-weight:600;color:var(--vi);background:var(--vc);align-self:flex-start;padding:2px 10px;border-radius:999px}
+.pillar h3{color:var(--vt)}
+.pillar p{font-size:14.5px}
+.pillar .proof{font-size:13px;color:var(--muted);border-top:1px solid var(--line);padding-top:8px;margin-top:auto}
+.stages{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+@media (max-width:760px){.stages{grid-template-columns:1fr}}
+.stage{border-top:4px solid var(--vc);background:var(--surface);padding:14px 16px;border-radius:0 0 6px 6px}
+.stage .k{font-family:var(--f-mono);font-size:12.5px;color:var(--vt);font-weight:600}
+.stage p{font-size:14.5px}
+.cal .d .t2{font-size:11px;opacity:.9}
+.twotype{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:760px){.twotype{grid-template-columns:1fr}}
+.tt{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:16px 18px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.tt h3{font-size:19px}
+.tt.th-box h3{color:var(--ci-t)} .tt.ex-box h3{color:var(--c3-t)}
+.tt p{font-size:13.5px;color:var(--muted)}
+.tt ul{font-size:14px}
+.tt .sample{display:flex;gap:6px;flex-wrap:wrap}
+.tt .sample .ev{width:auto;cursor:default}
+.months{display:flex;flex-direction:column;gap:22px}
+.mon h3{font-size:20px;margin-bottom:8px}
+.cal2{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+@media (max-width:640px){.months{overflow-x:auto}.cal2{min-width:620px}}
+.cal2 .dow{font-size:12px;font-weight:700;color:var(--muted);text-align:center}
+.cal2 .d{min-height:72px;background:var(--surface);border:1px solid var(--line);border-radius:4px;padding:4px 5px;display:flex;flex-direction:column;gap:3px;min-width:0}
+.cal2 .d.blank{background:transparent;border-color:transparent}
+.cal2 .d b{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.cal2 .d.sun b{color:var(--ce-t)}
+.ev{display:block;width:100%;text-align:left;border:0;border-radius:3px;padding:3px 5px;font-size:11.5px;line-height:1.35;cursor:pointer;font-family:inherit}
+.ev small{display:block;font-size:10.5px;opacity:.9}
+.ev .tg{display:inline-block;font-size:9.5px;font-weight:700;padding:0 4px;border-radius:2px;margin-right:4px;vertical-align:1px}
+.ev.th{background:color-mix(in srgb,var(--vc) 13%,var(--surface));border-left:4px solid var(--vc);color:var(--fg)}
+.ev.th .tg{background:var(--vc);color:var(--vi)}
+.ev.ex{background:var(--vc);color:var(--vi);font-weight:600;box-shadow:0 1px 0 rgba(0,0,0,.08)}
+.ev.ex .tg{background:var(--vi);color:var(--vc)}
+.ev.info{background:transparent;border:1px dashed var(--muted);color:var(--muted)}
+.ev.info .tg{background:var(--muted);color:var(--surface)}
+.ev:hover{filter:brightness(1.05)}
+.ev:focus-visible{outline:2px solid var(--fg);outline-offset:1px}
+
+</style>
+
+<nav class="topnav" aria-label="브리핑 메뉴">
+  <div class="nav-in">
+    <button class="home" type="button" data-go="overview">전체 보기</button>
+    <button class="brand" type="button" data-go="overview">치유관광 인재양성 모델</button>
+    <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="menu">메뉴</button>
+    <ul class="menu" id="menu">
+      <li class="ve" data-group="bg">
+        <button type="button">배경</button>
+        <ul class="sub">
+          <li><button type="button" data-go="why">왜 지금, 지방대학인가</button></li>
+          <li><button type="button" data-go="law">법·정책 근거</button></li>
+        </ul>
+      </li>
+      <li class="vs" data-group="plan">
+        <button type="button">모델·일정</button>
+        <ul class="sub">
+          <li><button type="button" data-go="timeline">2학기 통합 일정</button></li>
+          <li><button type="button" data-go="calendar">학기 전체 달력 (이론·체험)</button></li>
+          <li><button type="button" data-go="link">교과 × 창업 연계</button></li>
+        </ul>
+      </li>
+      <li class="vi" data-group="course">
+        <button type="button">교과</button>
+        <ul class="sub">
+          <li class="vi"><button type="button" data-go="course"><span class="dot"></span>일본치유배낭여행 · 대체 운영</button></li>
+          <li class="v3"><button type="button" data-go="japan"><span class="dot"></span>일본 현장실습 5박 6일</button></li>
+        </ul>
+      </li>
+      <li class="v2" data-group="startup">
+        <button type="button">창업과정</button>
+        <ul class="sub">
+          <li><button type="button" data-go="startup">크리에이터 창업과정</button></li>
+          <li><button type="button" data-go="startup" data-at="startup-sites">무안·힐스포레 현장</button></li>
+        </ul>
+      </li>
+      <li class="vp" data-group="value">
+        <button type="button">가치·비전</button>
+        <ul class="sub">
+          <li><button type="button" data-go="value">왜 진정한 로컬 정주형 과정인가</button></li>
+          <li><button type="button" data-go="value" data-at="value-compare">기존 창업교육과 비교</button></li>
+          <li><button type="button" data-go="value" data-at="value-vision">단계별 비전</button></li>
+        </ul>
+      </li>
+      <li class="vg" data-group="spread">
+        <button type="button">확산·제안</button>
+        <ul class="sub">
+          <li><button type="button" data-go="network">협력 네트워크</button></li>
+          <li><button type="button" data-go="spread">다른 대학 도입 4단계</button></li>
+          <li><button type="button" data-go="vision">제안</button></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="wrap" id="top">
+
+<div class="crumb" id="crumb" hidden>
+  <button class="back" type="button" data-go="overview">← 전체 보기</button>
+  <span class="trail">전체 › <b id="crumbName"></b></span>
+  <div class="chips">
+    <button class="chip ve" type="button" data-go="why">배경</button>
+    <button class="chip vs" type="button" data-go="timeline">일정</button>
+    <button class="chip vs" type="button" data-go="calendar">달력</button>
+    <button class="chip vi" type="button" data-go="course">교과</button>
+    <button class="chip v3" type="button" data-go="japan">일본</button>
+    <button class="chip v2" type="button" data-go="startup">창업</button>
+    <button class="chip v4" type="button" data-go="link">연계</button>
+    <button class="chip vp" type="button" data-go="value">가치</button>
+    <button class="chip v1" type="button" data-go="law">근거</button>
+    <button class="chip v0" type="button" data-go="network">협력</button>
+    <button class="chip vg" type="button" data-go="spread">확산</button>
+  </div>
+</div>
+
+<!-- ===================== 전체 ===================== -->
+<section data-view="overview" aria-label="전체 모델 한눈에 보기">
+  <div class="board">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">국립공주대학교 · 지방대학 관계자 브리핑 · 2026. 10.</div>
+        <h1>지방대학이 치유관광대국의 인재를 키운다</h1>
+        <p>치유관광 교양강좌 × 일본 치유배낭여행 × 로컬 정주형 크리에이터 창업과정. 「치유관광산업 육성에 관한 법률」에 근거해 치유관광 전문인력이자 지역 창업자를 한 학기에 길러 내는 모델입니다.</p>
+      </div>
+      <div class="kpis">
+        <div class="kpi"><b>15주</b><span>교양 3학점 · 9. 1.–12. 8.</span></div>
+        <div class="kpi"><b>5박 6일</b><span>일본 현장 · 11. 19.–24.</span></div>
+        <div class="kpi"><b>Zoom 27h</b><span>창업과정 7회 + 현장 2회</span></div>
+        <div class="kpi"><b>12. 4.</b><span>쇼핑몰 정식 오픈</span></div>
+      </div>
+    </div>
+
+    <div class="board-label">한 학기 3중 연계 — 칸을 누르면 해당 내용으로 들어갑니다</div>
+    <div class="path">
+      <button class="stop vi" type="button" data-go="course">
+        <div class="top"><span class="step">STEP 1 · 교과</span><span class="hrs">3학점</span></div>
+        <div class="name">교양 일본치유배낭여행</div>
+        <div class="when">9. 1.–12. 8. · 15주 · 전교생</div>
+        <ul><li>치유관광산업법·치유자원</li><li>소통 회복·여행의 기술</li><li><b>수업은 창업과정으로 대체</b></li></ul>
+        <div class="out">과제: 일본치유여행기 + 유튜브</div>
+      </button>
+      <button class="stop v3" type="button" data-go="japan">
+        <div class="top"><span class="step">STEP 2 · 글로벌 현장</span><span class="hrs">5박 6일</span></div>
+        <div class="name">일본 치유배낭여행</div>
+        <div class="when">11. 19.(목)–24.(화)</div>
+        <ul><li>팬스타 미라클 부산↔오사카</li><li>오사카·교토·고베·히메지</li><li>산림·온천·사찰·정원 치유</li></ul>
+        <div class="out">경비는 지원 범위 제외</div>
+      </button>
+      <button class="stop v2" type="button" data-go="startup">
+        <div class="top"><span class="step">STEP 3 · 비교과</span><span class="hrs">약 59h</span></div>
+        <div class="name">로컬 크리에이터 창업과정</div>
+        <div class="when">11. 7.–12. 5.</div>
+        <ul><li>Zoom 7회 27시간</li><li>무안 1박 2일 · 쇼핑몰 등록</li><li>힐스포레 2박 3일 · 정식 오픈</li></ul>
+        <div class="out">RISE 앵커사업 · 20명</div>
+      </button>
+      <button class="stop vg end" type="button" data-go="vision">
+        <div class="top"><span class="step">GOAL</span><span class="hrs">12월</span></div>
+        <div class="name">전문인 + 지역 창업자</div>
+        <div class="when">12. 4. 오픈 · 12. 5. 피칭 준비</div>
+        <ul><li>치유관광 전문인 자격</li><li>도소매업 사업자등록</li><li>「모두의 창업」 기창업자 피칭</li></ul>
+        <div class="out">로컬 정주 · 치유관광대국</div>
+      </button>
+    </div>
+
+    <div class="hours">
+      <div class="board-label">2026년 2학기 흐름 — 막대를 누르면 일정으로 들어갑니다</div>
+      <div class="bar" role="group" aria-label="학기 흐름">
+        <button type="button" class="vi" style="flex:5" data-go="course">9–10월 교양<span>교과 학기 진행</span></button>
+        <button type="button" class="v0" style="flex:2" data-go="vision">10월 모집<span>10. 5.–29.</span></button>
+        <button type="button" class="v2" style="flex:2" data-go="startup">창업 Zoom<span>11. 7.–17.</span></button>
+        <button type="button" class="v3" style="flex:1.4" data-go="japan">일본<span>11. 19.–24.</span></button>
+        <button type="button" class="v1" style="flex:1" data-go="startup" data-at="startup-sites">무안<span>11. 26.–27.</span></button>
+        <button type="button" class="v4" style="flex:1.2" data-go="startup">Zoom<span>11. 28.·12. 1.</span></button>
+        <button type="button" class="vg" style="flex:1.2" data-go="startup" data-at="startup-sites">오픈<span>12. 3.–5.</span></button>
+      </div>
+      <div class="scale"><span>9. 1. 개강</span><span>12. 12. 과제 제출</span></div>
+    </div>
+
+    <button type="button" class="valueband" data-go="value" aria-label="가치와 비전 보기">
+      <span>이 과정의 가치<b>로컬 정주형 창업자 양성</b></span>
+      <span><b>법이 만든 직업</b>수료생 1명이 곧 치유관광서비스업 전문인력 요건</span>
+      <span><b>수료 = 창업</b>끝나면 사업자등록증과 운영 중인 쇼핑몰</span>
+      <span><b>지역 자원 = 상품</b>떠나지 않아도 지역에서 매출이 난다</span>
+    </button>
+
+    <div class="quick eight">
+      <button class="q vp" type="button" data-go="value"><b>가치와 비전</b><span>왜 진정한 로컬 정주형인가</span></button>
+      <button class="q vs" type="button" data-go="calendar"><b>학기 전체 달력</b><span>9–12월 · 이론형 / 체험형</span></button>
+      <button class="q ve" type="button" data-go="why"><b>왜 지금</b><span>법 · 지역 · 학생</span></button>
+      <button class="q vs" type="button" data-go="timeline"><b>통합 일정</b><span>9월–12월 한 화면</span></button>
+      <button class="q v4" type="button" data-go="link"><b>교과 × 창업</b><span>산출물이 창업 재료로</span></button>
+      <button class="q v1" type="button" data-go="law"><b>법·정책 근거</b><span>치유관광산업법 · RISE</span></button>
+      <button class="q v0" type="button" data-go="network"><b>협력 네트워크</b><span>협회 · 언론 · 현장</span></button>
+      <button class="q vg" type="button" data-go="spread"><b>도입 4단계</b><span>다른 지방대학으로</span></button>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== 왜 지금 ===================== -->
+<section data-view="why" class="ve">
+  <div class="vhead ve">
+    <div class="k">배경</div>
+    <h2>왜 지금, 지방대학인가</h2>
+    <p>법이 1인 창업의 문을 열었고, 치유자원은 지역에 있으며, 학생들은 회복이 필요합니다.</p>
+  </div>
+  <div class="roles three">
+    <div class="role v1"><div class="k">법이 문을 열었다</div><h3>2026. 4. 9. 치유관광산업법 시행</h3><p>치유관광서비스업 ‘서비스 제공형’은 전문인력 1명과 상시 프로그램 1개로 등록할 수 있어 1인 창업이 가능해졌습니다.</p></div>
+    <div class="role v3"><div class="k">자원은 지역에 있다</div><h3>숲·갯벌·온천·사찰</h3><p>치유자원은 지방에 있습니다. 이를 기획하고 운영할 전문인력이 지역에 머물러야 치유관광산업이 섭니다.</p></div>
+    <div class="role vi"><div class="k">학생은 회복이 필요하다</div><h3>소통의 위기</h3><p>스마트폰·AI 의존과 코쿤족·캥거루족 증가로 대면 소통 역량이 약해졌습니다. 치유관광 체험이 회복과 진로의 교실이 됩니다.</p></div>
+  </div>
+  <p class="note">교양강좌에서 시작해 해외·국내 현장을 거쳐 지역 창업으로 끝나는 한 학기 모델로 답합니다.</p>
+</section>
+
+<!-- ===================== 통합 일정 ===================== -->
+<section data-view="timeline" class="vs">
+  <div class="vhead vs">
+    <div class="k">통합 일정</div>
+    <h2>2026년 2학기, 한 흐름으로 이어지는 일정</h2>
+    <p>교양 수업은 창업과정과 현장실습으로 대체 운영하므로 시간이 겹쳐도 됩니다. 막대를 누르면 해당 내용으로 이동합니다.</p>
+  </div>
+  <div class="gantt-wrap"><div class="gantt">
+    <div class="g-head"><span></span><div class="g-months"><span style="left:0%">9월</span><span style="left:29.4%">10월</span><span style="left:59.8%">11월</span><span style="left:89.2%">12월</span></div></div>
+    <div class="g-row"><span class="g-label vi">교양 강좌</span><div class="g-track"><button type="button" class="g-bar vi" style="left:0%;width:96%" data-go="course">일본치유배낭여행 9. 1.–12. 8. · 수업은 창업과정으로 대체</button></div></div>
+    <div class="g-row"><span class="g-label v0">모집·선발</span><div class="g-track"><button type="button" class="g-bar v0" style="left:33.3%;width:25.5%" data-go="vision">모집 10. 5.–29. · 발표 10. 31.</button></div></div>
+    <div class="g-row"><span class="g-label v2">창업 Zoom 7회</span><div class="g-track">
+      <button type="button" class="g-dot v2" style="left:65.7%" data-go="startup" aria-label="1회 11. 7."></button>
+      <button type="button" class="g-dot v2" style="left:68.6%" data-go="startup" aria-label="2회 11. 10."></button>
+      <button type="button" class="g-dot v2" style="left:70.6%" data-go="startup" aria-label="3회 11. 12."></button>
+      <button type="button" class="g-dot v2" style="left:72.5%" data-go="startup" aria-label="4회 11. 14."></button>
+      <button type="button" class="g-dot v2" style="left:75.5%" data-go="startup" aria-label="5회 11. 17."></button>
+      <button type="button" class="g-dot v2" style="left:86.3%" data-go="startup" aria-label="6회 11. 28."></button>
+      <button type="button" class="g-dot v2" style="left:89.2%" data-go="startup" aria-label="7회 12. 1."></button>
+      <span class="g-note" style="right:46%">11. 7.–12. 1.</span></div></div>
+    <div class="g-row"><span class="g-label v3">일본 현장실습</span><div class="g-track"><button type="button" class="g-bar v3" style="left:77.5%;width:5.9%" data-go="japan" aria-label="일본 11. 19.–24."></button><span class="g-note" style="right:23.5%">11. 19.–24. 5박 6일</span></div></div>
+    <div class="g-row"><span class="g-label v1">무안 현장체험</span><div class="g-track"><button type="button" class="g-bar v1" style="left:84.3%;width:2%" data-go="startup" data-at="startup-sites" aria-label="무안 11. 26.–27."></button><span class="g-note" style="right:16.5%">11. 26.–27. 쇼핑몰 등록 완료</span></div></div>
+    <div class="g-row"><span class="g-label v1">힐스포레 현장</span><div class="g-track"><button type="button" class="g-bar vg" style="left:91.2%;width:2.9%" data-go="startup" data-at="startup-sites" aria-label="힐스포레 12. 3.–5."></button><span class="g-note" style="right:10%">12. 3.–5. · 12. 4. 정식 오픈</span></div></div>
+    <div class="g-row"><span class="g-label vg">과제 제출</span><div class="g-track"><span class="g-diamond" style="left:98.5%"></span><span class="g-note" style="right:3%">12. 12. 일본치유여행기 + 유튜브</span></div></div>
+  </div></div>
+</section>
+
+<!-- ===================== 교과 ===================== -->
+<section data-view="course" class="vi">
+  <div class="vhead vi">
+    <div class="k">교과 · 교양 3학점</div>
+    <h2>일본치유배낭여행 — 수업은 창업과정으로 대체 운영</h2>
+    <p>교양 15주 수업을 따로 열지 않고, 같은 주제를 다루는 창업과정 회차와 현장실습으로 대체합니다. 과제와 평가는 강의계획서대로입니다.</p>
+    <div class="facts"><span>교양선택 3학점(이론 1·실습 4)</span><span>전교생</span><span>9. 1.–12. 8.</span></div>
+  </div>
+  <div class="split">
+    <div class="tbl"><table>
+      <tbody>
+        <tr><th>교과목</th><td>일본치유배낭여행(2010961)</td></tr>
+        <tr><th>방식</th><td>혼합형(LMS 30~50%) · 수업은 창업과정·현장실습으로 대체</td></tr>
+        <tr><th>평가</th><td>중간 20 · 기말 20 · 과제 20 · 수업활동 30 · 출결 10</td></tr>
+        <tr><th>과제</th><td>일본치유여행기 + 유튜브 (12. 12. 제출)</td></tr>
+        <tr><th>교재</th><td>『삶을 창조하는 여행의 기술』(이용근) · 『여행의 기술』(알랭 드 보통)</td></tr>
+      </tbody>
+    </table></div>
+    <div class="role vi"><div class="k">교과목 목표</div>
+      <ol>
+        <li>자기 감정 인식과 타인 공감 능력 향상</li>
+        <li>현지인·동료와의 실시간 소통으로 글로벌 의사소통 역량</li>
+        <li>자기 주도 여행 설계로 진로 도전 의식</li>
+        <li>치유관광산업법 이해와 치유관광의 사회적 가치</li>
+        <li>치유관광 체험을 비즈니스 콘텐츠로 — 창직·창업</li>
+      </ol>
+    </div>
+  </div>
+  <h2 id="course-map" style="scroll-margin-top:120px">교양 15주 ↔ 창업과정 대체표</h2>
+  <div class="tbl"><table>
+    <thead><tr><th style="width:110px">교양 주차</th><th>교양 수업 내용 (강의계획서)</th><th>대체하는 창업과정 · 현장</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1–2주</td><td>소통의 위기 · 치유관광산업법 · 치유자원</td><td>창업 1회 11. 7.(토) — 치유관광산업법 · 치유자원 · K-Healing Journey</td></tr>
+      <tr><td class="num">3–5주</td><td>소통 심리학 · 여행의 기술 · 여행과 관광</td><td>창업 2회 11. 10.(화) — 치유의 과학과 전통 · 프로그램 기획</td></tr>
+      <tr><td class="num">6–8주</td><td>일본 여행계획 수립 · 계획서 제출</td><td>창업 5회 11. 17.(화) — 현장 촬영 계획 · 일본·무안 사전 안내</td></tr>
+      <tr class="hl"><td class="num">9주</td><td>일본 치유배낭여행 현장실습</td><td><b>일본 5박 6일 11. 19.–24.</b> (오사카·교토·고베·히메지)</td></tr>
+      <tr><td class="num">10주</td><td>귀환 성찰 워크숍 · 스토리텔링</td><td>무안 현장체험 11. 26.–27. · 창업 6회 11. 28.</td></tr>
+      <tr><td class="num">11주</td><td>K-MediWell 융복합 · 비즈니스 아이디어</td><td>창업 3·4회 11. 12.·14. — 도소매업 BM · 사업자등록 · 소싱</td></tr>
+      <tr><td class="num">12–13주</td><td>디지털 균형 · 여행 SNS 제작</td><td>창업 5·6회 — AX 콘텐츠 제작 · 채널별 판매 촉진</td></tr>
+      <tr><td class="num">14주</td><td>유튜브 발표 · 프로그램 기획서</td><td>창업 7회 12. 1.(화) — 런칭 캠페인 · 피칭 준비</td></tr>
+      <tr><td class="num">15주</td><td>기말 · 팀 프로젝트 평가</td><td>힐스포레 12. 3.–5. — 정식 오픈 · 발전계획 · 피칭 준비</td></tr>
+    </tbody>
+  </table></div>
+  <p class="note">2001년부터 운영하던 일본배낭여행 강좌가 2011년 동일본 대지진으로 폐강된 뒤, 엔저와 치유관광산업법 시행을 계기로 부활했습니다.</p>
+</section>
+
+<!-- ===================== 일본 ===================== -->
+<section data-view="japan" class="v3">
+  <div class="vhead v3">
+    <div class="k">글로벌 현장 · 11. 19.(목)–24.(화)</div>
+    <h2>일본 치유배낭여행 5박 6일</h2>
+    <p>팬스타 미라클 부산↔오사카 · 선상 2박 + 오사카 숙박 3박 · 대중교통과 걷기로 다니는 치유관광입니다.</p>
+    <div class="facts"><span>교양 9주차 현장실습</span><span>경비는 지원 범위 제외</span></div>
+  </div>
+  <div class="days">
+    <div class="day solid"><div class="k">Day 1 · 11. 19. 목</div><h3>부산 출항</h3><p>14:00 승선 수속 · 16:00 출항<br>선상 세미나 ① 치유일지·소통 미션 안내</p><span class="stay">선상 1박</span></div>
+    <div class="day"><div class="k">Day 2 · 11. 20. 금</div><h3>오사카</h3><p>09:00 오사카항 도착<br>오사카성 공원 걷기 · 대중목욕탕 체험<br>시장에서 현지인 대화 미션</p><span class="stay">오사카 숙박</span></div>
+    <div class="day"><div class="k">Day 3 · 11. 21. 토</div><h3>교토</h3><p>아라시야마 대나무숲 산림욕<br>사찰 좌선·명상 · 다도 체험</p><span class="stay">오사카 숙박</span></div>
+    <div class="day"><div class="k">Day 4 · 11. 22. 일</div><h3>고베</h3><p>아리마 온천 치유<br>롯코산 숲길 걷기 · 고베항 산책</p><span class="stay">오사카 숙박</span></div>
+    <div class="day"><div class="k">Day 5 · 11. 23. 월</div><h3>히메지 → 오사카항</h3><p>히메지성·고코엔 정원 걷기<br>15:00 수속 · 17:00 출항<br>선상 세미나 ② 여행 평가</p><span class="stay">선상 1박</span></div>
+    <div class="day solid"><div class="k">Day 6 · 11. 24. 화</div><h3>부산 귀국</h3><p>10:00 부산항 도착 · 공주 귀환<br>치유일지·영상 정리</p><span class="stay">귀국</span></div>
+  </div>
+  <p class="note">현장 과제: 매일 치유일지 · 현지인 대면 소통 미션 · 일본 치유자원(산림·온천·사찰·정원) 사례 수집 → 창업과정 상세페이지·숏폼 콘텐츠로 활용</p>
+  <p style="font-size:13px;color:var(--muted)">운항: 부산→오사카 목 16:00 → 다음 날 09:00 · 오사카→부산 월 17:00 → 다음 날 10:00 (2026년 9월 기준 공개 자료, 출발 전 팬스타크루즈 공지 확인). 일본 치유배낭여행 경비는 이 과정의 지원 범위에서 제외됩니다.</p>
+</section>
+
+<!-- ===================== 창업과정 ===================== -->
+<section data-view="startup" class="v2">
+  <div class="vhead v2">
+    <div class="k">비교과 · RISE 앵커사업</div>
+    <h2>AX 기반 K-치유관광 로컬 크리에이터 창업과정</h2>
+    <p>Zoom 7회 27시간과 현장 2회로, 도소매업 사업자등록부터 12월 4일 쇼핑몰 정식 오픈까지 갑니다.</p>
+    <div class="facts"><span>선발 20명</span><span>11. 7.–12. 5.</span><span>약 59시간</span></div>
+  </div>
+  <div class="income four">
+    <div class="v1"><b>과정 1 · 8h</b>치유관광 콘텐츠 이해</div>
+    <div class="v2"><b>과정 2 · 8h</b>쇼핑몰 창업</div>
+    <div class="v3"><b>과정 3 · 약 32h</b>현장체험</div>
+    <div class="v4"><b>과정 4 · 11h</b>마케팅</div>
+  </div>
+  <div class="tbl"><table>
+    <thead><tr><th>회</th><th>일시</th><th>과정</th><th>주요 내용</th></tr></thead>
+    <tbody>
+      <tr><td class="num">1</td><td class="num">11. 7.(토) 13–18 · 5h</td><td>과정 1</td><td>치유관광산업법·전문인 역할 · 치유자원·K-Healing Journey</td></tr>
+      <tr><td class="num">2</td><td class="num">11. 10.(화) 19–22 · 3h</td><td>과정 1</td><td>치유의 과학과 전통 · 프로그램 기획·관리·운영</td></tr>
+      <tr><td class="num">3</td><td class="num">11. 12.(목) 19–22 · 3h</td><td>과정 2</td><td>도소매업 BM 설계 · <span class="key">사업자등록 신청</span></td></tr>
+      <tr><td class="num">4</td><td class="num">11. 14.(토) 13–18 · 5h</td><td>과정 2</td><td>도매 소싱·가격 · 판매자 가입·통신판매업 신고</td></tr>
+      <tr><td class="num">5</td><td class="num">11. 17.(화) 19–22 · 3h</td><td>과정 4</td><td>AX 콘텐츠 제작 · 무안 현장 사전 안내</td></tr>
+      <tr class="hl"><td class="num">—</td><td class="num">11. 19.–24.</td><td>교과</td><td>일본 치유배낭여행 (창업과정 Zoom 없음)</td></tr>
+      <tr class="hl"><td class="num">—</td><td class="num">11. 26.–27.</td><td>과정 3</td><td>무안 하늘별바다 · 황토갯벌 체험·뇌파 측정 · <span class="key">쇼핑몰 등록 완료</span></td></tr>
+      <tr><td class="num">6</td><td class="num">11. 28.(토) 13–18 · 5h</td><td>과정 4</td><td>무안 데이터 활용 · 채널별 판매 촉진</td></tr>
+      <tr><td class="num">7</td><td class="num">12. 1.(화) 19–22 · 3h</td><td>과정 4</td><td>런칭 캠페인 · 피칭 준비 · 전문인 자격 평가</td></tr>
+      <tr class="hl"><td class="num">—</td><td class="num">12. 3.–5.</td><td>과정 3</td><td>공주 힐스포레 · 치유프로그램 운영 실습 · <span class="key">12. 4. 정식 오픈</span> · 발전계획</td></tr>
+    </tbody>
+  </table></div>
+  <h2 id="startup-sites" style="scroll-margin-top:120px">국내 현장 2곳</h2>
+  <div class="roles">
+    <div class="role v1"><div class="k">무안 하늘별바다 힐링스테이 · 11. 26.–27.</div><h3>체험 · 측정 · 쇼핑몰 등록 완료</h3><p>문화체육관광부·한국관광공사 추천 웰니스관광지. 황토갯벌 맨발걷기와 체험 전·후 뇌파 측정, 상품·홍보 촬영, 1일차 저녁 쇼핑몰 등록 완료.</p></div>
+    <div class="role vg"><div class="k">공주 힐스포레 · 12. 3.–5.</div><h3>운영 실습 · 정식 오픈 · 피칭 준비</h3><p>본인 쇼핑몰에서 팔 치유프로그램을 직접 운영하고, 12월 4일 상품 등록·정식 오픈, 12월 5일 향후 발전계획과 「모두의 창업」 기창업자 피칭 준비, 수료.</p></div>
+  </div>
+</section>
+
+
+<!-- ===================== 달력 ===================== -->
+<section data-view="calendar" class="vs">
+  <div class="vhead vs">
+    <div class="k">학기 전체 달력 · 2026. 9. 1.–12. 12.</div>
+    <h2>이론형 교과과정과 체험형 교과과정을 한 달력에</h2>
+    <p>교양 일본치유배낭여행 15주(매주 화 14–17시)와 창업과정 Zoom 7회는 이론형, 일본·무안·힐스포레 현장은 체험형입니다. 일정 칸을 누르면 해당 내용으로 이동합니다.</p>
+  </div>
+  <div class="twotype">
+    <div class="tt th-box"><div class="sample"><span class="ev th vi"><span class="tg">이론</span>교양</span><span class="ev th v2"><span class="tg">이론</span>창업 Zoom</span></div>
+      <h3>이론형 교과과정</h3><p>강의실·Zoom에서 배우는 과정 · 연한 바탕에 왼쪽 색띠</p>
+      <ul><li><b>교양 15주 · 45시간</b> 9. 1.–12. 8. 매주 화 14:00–17:00</li><li><b>창업과정 Zoom 7회 · 27시간</b> 11. 7.–12. 1. 화·목 19–22시, 토 13–18시</li></ul></div>
+    <div class="tt ex-box"><div class="sample"><span class="ev ex v3"><span class="tg">체험</span>일본</span><span class="ev ex v1"><span class="tg">체험</span>국내 현장</span><span class="ev ex vg"><span class="tg">체험</span>오픈</span></div>
+      <h3>체험형 교과과정</h3><p>현장에서 몸으로 배우는 과정 · 진한 색으로 꽉 채운 칸</p>
+      <ul><li><b>일본 치유배낭여행 5박 6일</b> 11. 19.–24. (교양 현장실습)</li><li><b>무안 1박 2일 · 힐스포레 2박 3일</b> 11. 26.–27. · 12. 3.–5. (약 32시간)</li></ul></div>
+  </div>
+  <div class="months"><div class="mon"><h3>9월</h3><div class="cal2"><div class="dow">일</div><div class="dow">월</div><div class="dow">화</div><div class="dow">수</div><div class="dow">목</div><div class="dow">금</div><div class="dow">토</div><div class="d blank"></div><div class="d blank"></div><div class="d"><b>1</b><button type="button" class="ev th vi" data-go="course"><span class="tg">이론</span>교양 1주 14–17<small>OT·치유관광산업법</small></button></div><div class="d"><b>2</b></div><div class="d"><b>3</b></div><div class="d"><b>4</b></div><div class="d"><b>5</b></div><div class="d sun"><b>6</b></div><div class="d"><b>7</b></div><div class="d"><b>8</b><button type="button" class="ev th vi" data-go="course"><span class="tg">이론</span>교양 2주 14–17<small>치유관광자원</small></button></div><div class="d"><b>9</b></div><div class="d"><b>10</b></div><div class="d"><b>11</b></div><div class="d"><b>12</b></div><div class="d sun"><b>13</b></div><div class="d"><b>14</b></div><div class="d"><b>15</b><button type="button" class="ev th vi" data-go="course"><span class="tg">이론</span>교양 3주 14–17<small>소통의 심리학</small></button></div><div class="d"><b>16</b></div><div class="d"><b>17</b></div><div class="d"><b>18</b></div><div class="d"><b>19</b></div><div class="d sun"><b>20</b></div><div class="d"><b>21</b></div><div class="d"><b>22</b><button type="button" class="ev th vi" data-go="course"><span class="tg">이론</span>교양 4주 14–17<small>여행의 기술</small></button></div><div class="d"><b>23</b></div><div class="d"><b>24</b></div><div class="d"><b>25</b></div><div class="d"><b>26</b></div><div class="d sun"><b>27</b></div><div class="d"><b>28</b></div><div class="d"><b>29</b><button type="button" class="ev th vi" data-go="course"><span class="tg">이론</span>교양 5주 14–17<small>여행과 관광</small></button></div><div class="d"><b>30</b></div></div></div><div class="mon"><h3>10월</h3><div class="cal2"><div class="dow">일</div><div class="dow">월</div><div class="dow">화</div><div class="dow">수</div><div class="dow">목</div><div class="dow">금</div><div class="dow">토</div><div class="d blank"></div><div class="d blank"></div><div class="d blank"></div><div class="d blank"></div><div class="d"><b>1</b></div><div class="d"><b>2</b></div><div class="d"><b>3</b></div><div class="d sun"><b>4</b></div><div class="d"><b>5</b><button type="button" class="ev info v0" data-go="vision"><span class="tg">안내</span>창업과정 모집 시작</button></div><div class="d"><b>6</b><button type="button" class="ev th vi" data-go="course"><span class="tg">이론</span>교양 6주 14–17<small>여행계획 ①</small></button></div><div class="d"><b>7</b></div><div class="d"><b>8</b></div><div class="d"><b>9</b></div><div class="d"><b>10</b></div><div class="d sun"><b>11</b></div><div class="d"><b>12</b></div><div class="d"><b>13</b><button type="button" class="ev th vi" data-go="course"><span class="tg">이론</span>교양 7주 14–17<small>여행계획 ②·일본어</small></button></div><div class="d"><b>14</b></div><div class="d"><b>15</b></div><div class="d"><b>16</b></div><div class="d"><b>17</b></div><div class="d sun"><b>18</b></div><div class="d"><b>19</b></div><div class="d"><b>20</b><button type="button" class="ev th vi" data-go="course"><span class="tg">이론</span>교양 8주 14–17<small>치유여행 계획서 제출</small></button></div><div class="d"><b>21</b></div><div class="d"><b>22</b></div><div class="d"><b>23</b></div><div class="d"><b>24</b></div><div class="d sun"><b>25</b></div><div class="d"><b>26</b></div><div class="d"><b>27</b><button type="button" class="ev th vi" data-go="course"><span class="tg">이론</span>교양 9주 14–17<small>현장실습 주차</small></button></div><div class="d"><b>28</b></div><div class="d"><b>29</b><button type="button" class="ev info v0" data-go="vision"><span class="tg">안내</span>모집 마감</button></div><div class="d"><b>30</b></div><div class="d"><b>31</b><button type="button" class="ev info v0" data-go="vision"><span class="tg">안내</span>선발 발표</button></div></div></div><div class="mon"><h3>11월</h3><div class="cal2"><div class="dow">일</div><div class="dow">월</div><div class="dow">화</div><div class="dow">수</div><div class="dow">목</div><div class="dow">금</div><div class="dow">토</div><div class="d sun"><b>1</b></div><div class="d"><b>2</b></div><div class="d"><b>3</b><button type="button" class="ev th vi" data-go="course"><span class="tg">이론</span>교양 10주 14–17<small>성찰 워크숍</small></button></div><div class="d"><b>4</b></div><div class="d"><b>5</b></div><div class="d"><b>6</b></div><div class="d"><b>7</b><button type="button" class="ev th v2" data-go="startup"><span class="tg">이론</span>창업 1회 Zoom 13–18<small>법·치유자원</small></button></div><div class="d sun"><b>8</b></div><div class="d"><b>9</b></div><div class="d"><b>10</b><button type="button" class="ev th vi" data-go="course"><span class="tg">이론</span>교양 11주 14–17<small>K-MediWell 융복합</small></button><button type="button" class="ev th v2" data-go="startup"><span class="tg">이론</span>창업 2회 Zoom 19–22<small>치유의 과학·기획</small></button></div><div class="d"><b>11</b></div><div class="d"><b>12</b><button type="button" class="ev th v2" data-go="startup"><span class="tg">이론</span>창업 3회 Zoom 19–22<small>사업자등록</small></button></div><div class="d"><b>13</b></div><div class="d"><b>14</b><button type="button" class="ev th v2" data-go="startup"><span class="tg">이론</span>창업 4회 Zoom 13–18<small>소싱·통신판매 신고</small></button></div><div class="d sun"><b>15</b></div><div class="d"><b>16</b></div><div class="d"><b>17</b><button type="button" class="ev th vi" data-go="course"><span class="tg">이론</span>교양 12주 14–17<small>디지털 균형</small></button><button type="button" class="ev th v2" data-go="startup"><span class="tg">이론</span>창업 5회 Zoom 19–22<small>AX 콘텐츠·현장 OT</small></button></div><div class="d"><b>18</b></div><div class="d"><b>19</b><button type="button" class="ev ex v3" data-go="japan"><span class="tg">체험</span>일본 부산 출항 16:00<small>선상 1박</small></button></div><div class="d"><b>20</b><button type="button" class="ev ex v3" data-go="japan"><span class="tg">체험</span>일본 오사카<small>09:00 도착</small></button></div><div class="d"><b>21</b><button type="button" class="ev ex v3" data-go="japan"><span class="tg">체험</span>일본 교토<small>산림욕·좌선·다도</small></button></div><div class="d sun"><b>22</b><button type="button" class="ev ex v3" data-go="japan"><span class="tg">체험</span>일본 고베<small>아리마 온천</small></button></div><div class="d"><b>23</b><button type="button" class="ev ex v3" data-go="japan"><span class="tg">체험</span>일본 히메지→오사카항<small>17:00 출항</small></button></div><div class="d"><b>24</b><button type="button" class="ev th vi" data-go="course"><span class="tg">이론</span>교양 13주 14–17<small>여행 SNS 제작</small></button><button type="button" class="ev ex v3" data-go="japan"><span class="tg">체험</span>일본 부산 귀국<small>10:00 도착</small></button></div><div class="d"><b>25</b></div><div class="d"><b>26</b><button type="button" class="ev ex v1" data-go="startup" data-at="startup-sites"><span class="tg">체험</span>무안 1일차<small>쇼핑몰 등록 완료</small></button></div><div class="d"><b>27</b><button type="button" class="ev ex v1" data-go="startup" data-at="startup-sites"><span class="tg">체험</span>무안 2일차<small>촬영·상품화</small></button></div><div class="d"><b>28</b><button type="button" class="ev th v2" data-go="startup"><span class="tg">이론</span>창업 6회 Zoom 13–18<small>판매 촉진</small></button></div><div class="d sun"><b>29</b></div><div class="d"><b>30</b></div></div></div><div class="mon"><h3>12월 (1–12일)</h3><div class="cal2"><div class="dow">일</div><div class="dow">월</div><div class="dow">화</div><div class="dow">수</div><div class="dow">목</div><div class="dow">금</div><div class="dow">토</div><div class="d blank"></div><div class="d blank"></div><div class="d"><b>1</b><button type="button" class="ev th vi" data-go="course"><span class="tg">이론</span>교양 14주 14–17<small>유튜브 발표</small></button><button type="button" class="ev th v2" data-go="startup"><span class="tg">이론</span>창업 7회 Zoom 19–22<small>캠페인·자격 평가</small></button></div><div class="d"><b>2</b></div><div class="d"><b>3</b><button type="button" class="ev ex v1" data-go="startup" data-at="startup-sites"><span class="tg">체험</span>힐스포레 1일차<small>운영 실습</small></button></div><div class="d"><b>4</b><button type="button" class="ev ex vg" data-go="startup" data-at="startup-sites"><span class="tg">체험</span>힐스포레 2일차<small>상품 등록·정식 오픈</small></button></div><div class="d"><b>5</b><button type="button" class="ev ex v1" data-go="startup" data-at="startup-sites"><span class="tg">체험</span>힐스포레 3일차<small>발전계획·피칭 준비·수료</small></button></div><div class="d sun"><b>6</b></div><div class="d"><b>7</b></div><div class="d"><b>8</b><button type="button" class="ev th vi" data-go="course"><span class="tg">이론</span>교양 15주 14–17<small>기말·팀 평가</small></button></div><div class="d"><b>9</b></div><div class="d"><b>10</b></div><div class="d"><b>11</b></div><div class="d"><b>12</b><button type="button" class="ev info vi" data-go="course"><span class="tg">안내</span>교과 과제 제출<small>여행기 + 유튜브</small></button></div></div></div></div>
+  <p class="note">교양 주차별 주제는 강의계획서 원안대로 표시했습니다. 9주차 현장실습은 실제로 11. 19.–24. 일본에서 실시하며, 교양 수업은 창업과정·현장실습과 시간이 겹쳐도 되고 창업과정으로 대체할 수 있습니다.</p>
+</section>
+
+<!-- ===================== 가치와 비전 ===================== -->
+<section data-view="value" class="vp">
+  <div class="vhead vp">
+    <div class="k">가치와 비전</div>
+    <h2>왜 이것이 진정한 ‘로컬 정주형’ 창업자 양성과정인가</h2>
+    <p>교육이 끝나면 학생 손에 남는 것이 이수증이 아니라 사업자등록증과 운영 중인 쇼핑몰이고, 그 사업의 재료가 지역의 치유자원이기 때문입니다. 학생은 지역을 떠나지 않아도 일할 수 있고, 지역은 법이 요구하는 전문인력을 얻습니다.</p>
+  </div>
+  <div class="pillars">
+    <div class="pillar v1"><span class="n">1</span><h3>법이 만든 직업을 대학이 기른다</h3><p>치유관광서비스업 ‘서비스 제공형’은 전문인력 1명과 상시 프로그램 1개로 등록합니다. 수료생 한 명이 곧 등록 요건을 채우는 사람이고, 본인이 기획한 프로그램이 곧 상시 프로그램입니다.</p><span class="proof">근거: 「치유관광산업 육성에 관한 법률」(2026. 4. 9. 시행)</span></div>
+    <div class="pillar v2"><span class="n">2</span><h3>수료가 곧 창업이다</h3><p>수료 조건이 쇼핑몰 정식 오픈입니다. 11월 12일 사업자등록 신청, 26일 쇼핑몰 등록, 12월 4일 정식 오픈까지 교육 일정 안에서 실제 사업이 시작됩니다.</p><span class="proof">산출물: 사업자등록증 · 운영 중인 쇼핑몰 · 「모두의 창업」 신청서</span></div>
+    <div class="pillar vs"><span class="n">3</span><h3>지역 자원이 곧 상품이다</h3><p>무안의 황토갯벌, 공주의 숲처럼 지역의 치유자원을 체험 상품으로 만들어 온라인으로 팝니다. 수도권으로 떠나지 않아도 지역에서 매출이 나는 구조라서 정주가 가능합니다.</p><span class="proof">현장: 무안 하늘별바다 · 공주 힐스포레</span></div>
+    <div class="pillar v3"><span class="n">4</span><h3>세계에서 배우고 지역에서 실행한다</h3><p>일본의 산림·온천·사찰 치유 현장을 직접 겪고 돌아와 바로 국내 현장에 적용합니다. 다국어 콘텐츠로 외국인 치유관광객까지 고객으로 삼는 글로컬 창업자를 기릅니다.</p><span class="proof">현장: 오사카·교토·고베·히메지 5박 6일</span></div>
+    <div class="pillar v4"><span class="n">5</span><h3>데이터로 증명하는 치유</h3><p>체험 전·후 뇌파와 심박 측정 리포트를 상품 소개에 담습니다. ‘좋았다’는 후기가 아니라 측정값으로 효과를 보여 주는 것이 이 과정 창업자의 차별성입니다.</p><span class="proof">방법: 뉴로피드백(EEG·HRV) 측정 · AI 분석 리포트</span></div>
+    <div class="pillar vi"><span class="n">6</span><h3>학생이 먼저 회복된다</h3><p>스마트폰·AI 의존으로 위축된 학생들이 낯선 현장에서 사람을 만나며 대면 소통을 회복합니다. 스스로 회복을 겪어 본 사람이 남을 치유하는 상품을 만듭니다.</p><span class="proof">교과 목표: 공감 · 의사소통 · 공동체 역량</span></div>
+  </div>
+
+  <h2 id="value-compare" style="scroll-margin-top:120px">기존 창업교육과 무엇이 다른가</h2>
+  <div class="tbl"><table>
+    <thead><tr><th style="width:150px">구분</th><th>일반적인 대학 창업교육</th><th>로컬 정주형 K-치유관광 크리에이터 과정</th></tr></thead>
+    <tbody>
+      <tr><td>근거</td><td>일반 창업 역량</td><td>치유관광산업법이 요구하는 전문인력 양성</td></tr>
+      <tr><td>배우는 곳</td><td>강의실 · 온라인</td><td>강의실 + 일본 현장 + 지역 치유시설</td></tr>
+      <tr class="hl"><td>끝날 때 남는 것</td><td>이수증 · 사업계획서</td><td>사업자등록증 · 운영 중인 쇼핑몰 · 피칭 자료</td></tr>
+      <tr><td>사업의 재료</td><td>아이디어</td><td>지역 치유자원 · 측정 데이터 · 현장 콘텐츠</td></tr>
+      <tr><td>졸업 후 진로</td><td>수도권 취업 또는 창업</td><td>지역 치유관광서비스업 전문인력 · 1인 창업자로 정주</td></tr>
+      <tr><td>학점 연계</td><td>별도 비교과</td><td>교양 3학점 수업을 창업과정으로 대체</td></tr>
+    </tbody>
+  </table></div>
+
+  <h2 id="value-vision" style="scroll-margin-top:120px">단계별 비전</h2>
+  <div class="stages">
+    <div class="stage v2"><div class="k">지금 · 2026년 2학기</div><h3>국립공주대 시범 운영</h3><p>20명 선발, 쇼핑몰 20개 오픈. 교과·해외 현장·비교과 창업을 한 학기에 묶은 모델을 검증합니다.</p></div>
+    <div class="stage vs"><div class="k">다음 · 지방대학 네트워크</div><h3>공동 교양 · 공동 현장</h3><p>지방대학들이 치유관광 교양을 함께 개설하고, 각 지역의 치유시설을 서로의 현장실습장으로 엽니다.</p></div>
+    <div class="stage vg"><div class="k">미래 · 치유관광대국</div><h3>지역마다 치유관광 크리에이터</h3><p>지역마다 그 지역의 치유자원을 아는 전문인력과 창업자가 정착해, 대한민국이 치유관광대국으로 나아가는 인력 기반이 됩니다.</p></div>
+  </div>
+</section>
+
+<!-- ===================== 연계 ===================== -->
+<section data-view="link" class="v4">
+  <div class="vhead v4">
+    <div class="k">교과 × 비교과 연계</div>
+    <h2>교과의 산출물이 창업의 재료가 된다</h2>
+    <p>교양 수업은 창업과정으로 대체합니다. 같은 학생이 한 번 참여해 교과 이수와 창업을 함께 이룹니다.</p>
+  </div>
+  <div class="flow">
+    <button type="button" class="fbox vi" data-go="course"><span>교과 6–8주</span><b>치유여행 계획서</b></button><span class="farrow" aria-hidden="true">→</span>
+    <button type="button" class="fbox v1" data-go="startup"><span>창업 과정 1 · 11. 7.–10.</span><b>치유프로그램 기획서 · 운영 매뉴얼</b></button>
+    <button type="button" class="fbox v3" data-go="japan"><span>일본 현장 · 11. 19.–24.</span><b>치유일지 · 사진 · 영상</b></button><span class="farrow" aria-hidden="true">→</span>
+    <button type="button" class="fbox v4" data-go="startup"><span>창업 과정 4 · 11. 28.–12. 1.</span><b>상세페이지 · 숏폼 · 런칭 캠페인</b></button>
+    <button type="button" class="fbox vi" data-go="course"><span>교과 14주 · 과제</span><b>치유관광 프로그램 기획서 · 유튜브</b></button><span class="farrow" aria-hidden="true">→</span>
+    <button type="button" class="fbox vg" data-go="startup" data-at="startup-sites"><span>힐스포레 · 12. 3.–5.</span><b>쇼핑몰 체험 상품 · 발전계획 · 피칭</b></button>
+  </div>
+</section>
+
+<!-- ===================== 근거 ===================== -->
+<section data-view="law" class="v1">
+  <div class="vhead v1">
+    <div class="k">법 · 정책 근거</div>
+    <h2>법과 지역 정책이 같은 방향을 가리킨다</h2>
+    <p>법이 교육과 창업의 근거를 주고, RISE가 재원과 체계를, 「모두의 창업」이 다음 단계를 엽니다.</p>
+  </div>
+  <div class="roles three">
+    <div class="role v1"><div class="k">근거 법</div><h3>치유관광산업 육성에 관한 법률</h3><ul><li>2026. 4. 9. 시행</li><li>치유관광을 국가 정책 의제로 명문화</li><li>대학 교양 강좌 편성의 제도적 근거</li><li>서비스 제공형: 전문인력 1명 + 상시 프로그램 1개</li></ul></div>
+    <div class="role v2"><div class="k">지역 정책</div><h3>RISE 지역성장 인재양성(앵커)</h3><ul><li>로컬정주형 창업지원체계 구축·고도화</li><li>과제: AI 기술 기반 K-로컬 치유관광 콘텐츠 창업자 양성</li><li>교과·비교과 연계 운영</li></ul></div>
+    <div class="role vg"><div class="k">창업 지원</div><h3>「모두의 창업」</h3><ul><li>수료생은 사업자등록·쇼핑몰 운영 실적을 갖춘 기창업자</li><li>향후 발전계획과 함께 피칭 준비</li><li>우수 아이템은 창업경진대회 연계</li></ul></div>
+  </div>
+</section>
+
+<!-- ===================== 협력 ===================== -->
+<section data-view="network" class="v0">
+  <div class="vhead v0">
+    <div class="k">협력 네트워크</div>
+    <h2>대학 · 협회 · 언론 · 지역 현장이 한 팀으로</h2>
+    <p>국립공주대가 주관하고, 협회·언론·국내 현장·해외 현장이 역할을 나눕니다.</p>
+  </div>
+  <div class="hub">
+    <div class="role vi"><div class="k">협력</div><h3>글로벌치유관광협회</h3><p>치유관광 산업 네트워크, 전문인력 양성 연계</p></div>
+    <div class="hub-center"><div class="k">주관</div><h3>국립공주대학교</h3><p>관광경영학과 · 스마트의료웰니스관광대학원<br>교양 일본치유배낭여행 · RISE 앵커 창업과정</p></div>
+    <div class="role v4"><div class="k">협력</div><h3>치유관광타임스</h3><p>과정 소개와 학생 창업 사례 보도, 성과 확산</p></div>
+    <div class="role v1"><div class="k">국내 현장</div><h3>무안 하늘별바다 힐링스테이</h3><p>추천 웰니스관광지 · 1박 2일 현장체험 · 쇼핑몰 등록 완료</p></div>
+    <div class="role v3"><div class="k">해외 현장</div><h3>오사카·교토·고베·히메지</h3><p>산림·온천·사찰·정원 치유자원 · 팬스타 미라클 이용</p></div>
+    <div class="role vg"><div class="k">국내 현장</div><h3>공주 힐스포레</h3><p>산학협력 실습장 · 치유프로그램 운영 실습 · 쇼핑몰 정식 오픈</p></div>
+  </div>
+</section>
+
+<!-- ===================== 확산 ===================== -->
+<section data-view="spread" class="vg">
+  <div class="vhead vg">
+    <div class="k">다른 지방대학으로의 확산</div>
+    <h2>어느 지방대학이든 4단계로 도입할 수 있습니다</h2>
+    <p>교양 개설에서 로컬 정주까지, 국립공주대의 운영 자료를 그대로 가져갈 수 있습니다.</p>
+  </div>
+  <div class="path steps4">
+    <div class="stop vi"><div class="top"><span class="step">STEP 1</span></div><div class="name">치유관광 교양 개설</div><ul><li>현장실습형 교양 3학점</li><li>수업은 창업과정으로 대체 인정</li></ul></div>
+    <div class="stop v1"><div class="top"><span class="step">STEP 2</span></div><div class="name">지역 치유자원 협약</div><ul><li>숲·갯벌·온천·사찰 등</li><li>숙박·체험 시설과 현장실습 협약</li></ul></div>
+    <div class="stop v2"><div class="top"><span class="step">STEP 3</span></div><div class="name">비교과 창업과정</div><ul><li>Zoom 27시간 + 현장 2회</li><li>RISE 연계 · 사업자등록→쇼핑몰 오픈</li></ul></div>
+    <div class="stop vg end"><div class="top"><span class="step">STEP 4</span></div><div class="name">로컬 정주</div><ul><li>치유관광서비스업 전문인력</li><li>지역 시설 운영 인력 · 1인 창업자</li></ul></div>
+  </div>
+  <div class="role v0"><div class="k">국립공주대가 공유할 수 있는 것</div><p>강의계획서 · 교재 · 창업과정 커리큘럼(4개 과정, 7회차) · 현장체험 운영 매뉴얼 · 모집 요강과 신청서 양식</p></div>
+</section>
+
+<!-- ===================== 제안 ===================== -->
+<section data-view="vision" class="vg">
+  <div class="hero">
+    <div>
+      <div class="eyebrow">제안</div>
+      <h1>지방대학을 치유관광대국의 인재 허브로</h1>
+      <p>이론 중심의 관광 교육에서, 법에 근거한 치유관광 전문인력과 지역에 정착하는 창업자를 길러 내는 교육으로 흐름을 바꿉니다.</p>
+    </div>
+    <div class="kpis">
+      <div class="kpi"><b>20명</b><span>2026년 2학기 선발</span></div>
+      <div class="kpi"><b>20개</b><span>쇼핑몰 오픈 목표</span></div>
+      <div class="kpi"><b>50명+</b><span>RISE 과제 참여 목표</span></div>
+      <div class="kpi"><b>3건</b><span>지역 창업 실적 목표</span></div>
+    </div>
+  </div>
+  <div class="tbl"><table>
+    <tbody>
+      <tr><th>모집</th><td>창업과정 10. 5.–29. 접수 · 10. 31. 발표 · 지원동기서 1–5쪽(자유양식)</td></tr>
+      <tr><th>함께할 일</th><td>치유관광 교양 공동 개설 · 현장실습 공동 운영 · 커리큘럼과 교재 공유</td></tr>
+      <tr><th>문의</th><td>이용근 교수 · 국립공주대학교 관광경영학과 · touryklee@naver.com · 041-850-8670</td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<footer>국립공주대학교 관광경영학과 · K-MediWell Research Group · 지방대학 관계자 브리핑(2026. 10.)</footer>
+</div>
+
+<script>
+(function(){
+  var NAMES={overview:'전체',why:'왜 지금, 지방대학인가',timeline:'2학기 통합 일정',course:'교과 · 일본치유배낭여행',japan:'일본 현장실습 5박 6일',startup:'크리에이터 창업과정',link:'교과 × 창업 연계',law:'법·정책 근거',network:'협력 네트워크',spread:'다른 대학 도입 4단계',vision:'제안',calendar:'학기 전체 달력',value:'가치와 비전'};
+  var GROUP={why:'bg',law:'bg',timeline:'plan',link:'plan',course:'course',japan:'course',startup:'startup',network:'spread',spread:'spread',vision:'spread',calendar:'plan',value:'value'};
+  var CLS={overview:'',why:'ve',timeline:'vs',course:'vi',japan:'v3',startup:'v2',link:'v4',law:'v1',network:'v0',spread:'vg',vision:'vg',calendar:'vs',value:'vp'};
+  var views=[].slice.call(document.querySelectorAll('[data-view]'));
+  var crumb=document.getElementById('crumb'), crumbName=document.getElementById('crumbName');
+  var nav=document.querySelector('.topnav'), toggle=document.getElementById('navToggle');
+  var items=[].slice.call(document.querySelectorAll('.menu>li'));
+  function closeMenus(){
+    items.forEach(function(li){li.classList.remove('open');});
+    nav.classList.remove('nav-open'); toggle.setAttribute('aria-expanded','false'); toggle.textContent='메뉴';
+    if(document.activeElement && nav.contains(document.activeElement)) document.activeElement.blur();
+  }
+  function show(v,at){
+    if(!NAMES[v]) v='overview';
+    views.forEach(function(el){el.hidden=(el.getAttribute('data-view')!==v);});
+    crumb.hidden=(v==='overview');
+    crumb.className='crumb '+(CLS[v]||'');
+    crumbName.textContent=NAMES[v];
+    document.querySelectorAll('.chip').forEach(function(c){c.setAttribute('aria-current',c.getAttribute('data-go')===v?'true':'false');});
+    items.forEach(function(li){li.classList.toggle('active',li.getAttribute('data-group')===GROUP[v]);});
+    try{history.replaceState(null,'',v==='overview'?location.pathname+location.search:'#'+v);}catch(e){}
+    var t=at?document.getElementById(at):null;
+    if(t){t.scrollIntoView({block:'start'});} else {window.scrollTo(0,0);}
+  }
+  document.addEventListener('click',function(e){
+    var el=e.target.closest('[data-go]');
+    if(el){show(el.getAttribute('data-go'),el.getAttribute('data-at'));closeMenus();return;}
+    if(!nav.contains(e.target)) items.forEach(function(li){li.classList.remove('open');});
+  });
+  items.forEach(function(li){
+    var btn=li.querySelector(':scope>button');
+    btn.setAttribute('aria-expanded','false');
+    btn.addEventListener('click',function(e){
+      e.stopPropagation();
+      var open=li.classList.toggle('open');
+      btn.setAttribute('aria-expanded',open?'true':'false');
+      items.forEach(function(o){if(o!==li)o.classList.remove('open');});
+    });
+  });
+  toggle.addEventListener('click',function(){
+    var open=nav.classList.toggle('nav-open');
+    toggle.setAttribute('aria-expanded',open?'true':'false');
+    toggle.textContent=open?'닫기':'메뉴';
+  });
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')closeMenus();});
+  var h=(location.hash||'').slice(1);
+  show(NAMES[h]?h:'overview');
+})();
+</script>
